@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3307
--- Generation Time: Dec 08, 2021 at 02:38 PM
+-- Generation Time: Dec 09, 2021 at 11:50 AM
 -- Server version: 10.4.17-MariaDB
 -- PHP Version: 8.0.1
 
@@ -37,8 +37,8 @@ CREATE TABLE `cart` (
 --
 
 INSERT INTO `cart` (`id`, `username`) VALUES
-(27, 'chiquang'),
-(28, 'admin');
+(20, 'admin'),
+(21, 'chiquang');
 
 -- --------------------------------------------------------
 
@@ -52,6 +52,28 @@ CREATE TABLE `cartdetail` (
   `quantity` int(11) NOT NULL,
   `date` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Triggers `cartdetail`
+--
+DELIMITER $$
+CREATE TRIGGER `insertCartDetail` BEFORE INSERT ON `cartdetail` FOR EACH ROW BEGIN
+  IF NEW.quantity > (SELECT quantity FROM product WHERE NEW.productID = id)
+  THEN
+   SIGNAL SQLSTATE '02000' SET MESSAGE_TEXT = 'Warning: Quantity not enough!';
+  END IF;
+END
+$$
+DELIMITER ;
+DELIMITER $$
+CREATE TRIGGER `updateCartDetail` BEFORE UPDATE ON `cartdetail` FOR EACH ROW BEGIN
+  IF NEW.quantity > (SELECT quantity FROM product WHERE NEW.productID = id)
+  THEN
+   SIGNAL SQLSTATE '02000' SET MESSAGE_TEXT = 'Warning: Quantity not enough!';
+  END IF;
+END
+$$
+DELIMITER ;
 
 -- --------------------------------------------------------
 
@@ -160,6 +182,22 @@ CREATE TABLE `import` (
   `employee_username` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Dumping data for table `import`
+--
+
+INSERT INTO `import` (`id`, `date`, `total`, `employee_username`) VALUES
+(51, '2021-12-09', 949000000, 'admin');
+
+--
+-- Triggers `import`
+--
+DELIMITER $$
+CREATE TRIGGER `deleteImport` BEFORE DELETE ON `import` FOR EACH ROW DELETE FROM orderdetail
+WHERE orderID = OLD.id
+$$
+DELIMITER ;
+
 -- --------------------------------------------------------
 
 --
@@ -195,7 +233,35 @@ CREATE TABLE `orderdetail` (
 
 INSERT INTO `orderdetail` (`orderID`, `productID`, `quantity`, `price`, `subtotal`, `discount`, `status`) VALUES
 (172, 10006, 1, 20490000, 20490000, 10, 0),
-(173, 10006, 1, 20490000, 20490000, 10, 0);
+(173, 10006, 1, 20490000, 20490000, 10, 1),
+(174, 10006, 1, 20490000, 20490000, 10, 0),
+(175, 10006, 1, 20490000, 20490000, 10, 1),
+(176, 10006, 1, 20490000, 20490000, 10, 0);
+
+--
+-- Triggers `orderdetail`
+--
+DELIMITER $$
+CREATE TRIGGER `deleteOrderDetail` BEFORE DELETE ON `orderdetail` FOR EACH ROW UPDATE product
+   SET quantity = quantity + 		OLD.quantity
+   WHERE id = OLD.productID
+$$
+DELIMITER ;
+DELIMITER $$
+CREATE TRIGGER `insertOrderDetail` BEFORE INSERT ON `orderdetail` FOR EACH ROW BEGIN
+  IF NEW.quantity > (SELECT quantity FROM product WHERE NEW.productID = id)
+  THEN
+   SIGNAL SQLSTATE '02000' SET MESSAGE_TEXT = 'Warning: Quantity not enough!';
+  END IF;
+UPDATE product
+   SET quantity = quantity - 		NEW.quantity
+   WHERE id = NEW.productID;
+UPDATE product
+   SET sold = sold + NEW.quantity
+   WHERE id = NEW.productID;
+END
+$$
+DELIMITER ;
 
 -- --------------------------------------------------------
 
@@ -224,7 +290,34 @@ CREATE TABLE `ordertb` (
 
 INSERT INTO `ordertb` (`id`, `date`, `subtotal`, `shippingfee`, `discount`, `total`, `employee_username`, `customer_username`, `customerID`, `status`, `moneyinput`, `moneyoutput`) VALUES
 (172, '2021-12-08', 18441000, 0, 0, 18441000, NULL, 'chiquang', NULL, -1, NULL, NULL),
-(173, '2021-12-08', 18441000, 0, 0, 18441000, NULL, 'chiquang', NULL, 4, NULL, NULL);
+(173, '2021-12-08', 18441000, 0, 0, 18441000, NULL, 'chiquang', NULL, 4, NULL, NULL),
+(174, '2021-12-08', 18441000, 0, 100000, 18341000, 'admin', NULL, 32, 4, 18341000, 0),
+(175, '2021-12-09', 18441000, 0, 200000, 18241000, NULL, 'chiquang', NULL, 4, NULL, NULL),
+(176, '2021-12-09', 18441000, 0, 100000, 18341000, 'admin', NULL, 32, 4, 18341000, 0);
+
+--
+-- Triggers `ordertb`
+--
+DELIMITER $$
+CREATE TRIGGER `cancelOrder` AFTER UPDATE ON `ordertb` FOR EACH ROW BEGIN
+
+END
+$$
+DELIMITER ;
+DELIMITER $$
+CREATE TRIGGER `deleteOrder` BEFORE DELETE ON `ordertb` FOR EACH ROW DELETE FROM orderdetail
+WHERE orderID = OLD.id
+$$
+DELIMITER ;
+DELIMITER $$
+CREATE TRIGGER `updateOrder` BEFORE UPDATE ON `ordertb` FOR EACH ROW BEGIN
+  IF NEW.status = -1 AND NEW.status = OLD.status 
+THEN
+SIGNAL SQLSTATE '02000' SET MESSAGE_TEXT = 'Đã hủy đơn không thể hủy nữa!';
+  END IF;
+END
+$$
+DELIMITER ;
 
 -- --------------------------------------------------------
 
@@ -256,24 +349,38 @@ CREATE TABLE `product` (
   `id` int(11) NOT NULL,
   `name` varchar(100) NOT NULL,
   `description` text DEFAULT NULL,
-  `quantity` int(11) NOT NULL,
+  `quantity` int(11) NOT NULL DEFAULT 0,
   `price` double NOT NULL,
+  `pagenumber` int(11) DEFAULT NULL,
   `publishdate` date DEFAULT NULL,
   `image` varchar(50) DEFAULT NULL,
-  `sold` int(11) NOT NULL,
+  `sold` int(11) NOT NULL DEFAULT 0,
   `publisherID` int(11) DEFAULT NULL,
   `saleID` varchar(100) DEFAULT NULL,
-  `status` tinyint(4) DEFAULT NULL
+  `status` tinyint(4) DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `product`
 --
 
-INSERT INTO `product` (`id`, `name`, `description`, `quantity`, `price`, `publishdate`, `image`, `sold`, `publisherID`, `saleID`, `status`) VALUES
-(10006, 'iPhone 12', '', 99, 20490000, '2021-12-08', 'iphone-12-xanh-la-new-2-600x600.jpg', 1, 14, 'discount10', 1),
-(10007, 'iPhone 13 Pro Max', '', 0, 33990000, '2021-12-09', 'iphone-13-pro-max-silver-600x600.jpg', 0, 14, 'discount10', 1),
-(10008, 'Samsung Galaxy Z Fold3 5G 256GB', '', 0, 41990000, '2021-12-05', 'samsung-galaxy-z-fold-3-silver-1-600x600.jpg', 0, 15, 'discount10', 1);
+INSERT INTO `product` (`id`, `name`, `description`, `quantity`, `price`, `pagenumber`, `publishdate`, `image`, `sold`, `publisherID`, `saleID`, `status`) VALUES
+(10006, 'iPhone 12', '', 94, 20490000, NULL, '2021-12-08', 'iphone-12-xanh-la-new-2-600x600.jpg', 6, 14, 'discount10', 1),
+(10007, 'iPhone 13 Pro Max', '', 0, 33990000, NULL, '2021-12-09', 'iphone-13-pro-max-silver-600x600.jpg', 0, 14, 'discount10', 1),
+(10008, 'Samsung Galaxy Z Fold3 5G 256GB', '', 0, 41990000, NULL, '2021-12-05', 'samsung-galaxy-z-fold-3-silver-1-600x600.jpg', 0, 15, 'discount10', 1);
+
+--
+-- Triggers `product`
+--
+DELIMITER $$
+CREATE TRIGGER `updateProductStatus` BEFORE UPDATE ON `product` FOR EACH ROW BEGIN
+  IF NEW.status = 1 AND NEW.quantity = 0
+  THEN
+   SIGNAL SQLSTATE '02000' SET MESSAGE_TEXT = 'Warning: Quantity not enough!';
+  END IF;
+END
+$$
+DELIMITER ;
 
 -- --------------------------------------------------------
 
@@ -316,7 +423,17 @@ CREATE TABLE `rating` (
 --
 
 INSERT INTO `rating` (`id`, `orderID`, `productID`, `rating`, `comment`, `date`) VALUES
-(62, 173, 10006, 5, 'Giao hàng nhanh, đóng gói kỹ', '2021-12-08 20:34:32');
+(28, 173, 10006, 5, 'Giao hàng nhanh, đóng gói kỹ', '2021-12-08 20:49:14'),
+(29, 175, 10006, 5, 'Giao nhanh ', '2021-12-09 16:57:42');
+
+--
+-- Triggers `rating`
+--
+DELIMITER $$
+CREATE TRIGGER `insertRating` AFTER INSERT ON `rating` FOR EACH ROW UPDATE orderdetail SET status = 1 WHERE orderID = NEW.orderID
+AND productID = NEW.productID
+$$
+DELIMITER ;
 
 -- --------------------------------------------------------
 
@@ -420,13 +537,13 @@ CREATE TABLE `sale` (
 --
 
 INSERT INTO `sale` (`id`, `name`, `quantity`, `discount`, `startdate`, `enddate`, `minorder`, `maxsale`, `type`) VALUES
-('11112222333', 'Voucher 10%', 100, 15, '2021-10-01', '2022-02-10', 5000000, 100000, 3),
+('11112222333', 'Voucher 10%', 97, 15, '2021-10-01', '2022-02-10', 5000000, 100000, 3),
 ('discount10', 'Giảm 10%', 100, 10, '2021-05-01', '2022-05-06', NULL, NULL, 0),
 ('discount20', 'Giảm 20%', 100, 20, '2021-05-01', '2022-05-06', NULL, NULL, 0),
 ('discount30', 'Giảm 30%', 100, 30, '2021-05-01', '2022-05-06', NULL, NULL, 0),
-('freeship10', 'Miễn phí vận chuyển tháng 10', 99, NULL, '2021-10-01', '2021-11-01', 9000000, NULL, 1),
-('freeship12', 'Miễn phí vận chuyển tháng 12', 99, NULL, '2021-12-01', '2022-01-01', 8000000, NULL, 1),
-('sinhnhat2021', 'Sinh nhật lần thứ 2', 100, 15, '2021-10-01', '2022-02-10', 5000000, 100000, 2);
+('freeship10', 'Miễn phí vận chuyển tháng 10', 98, NULL, '2021-10-01', '2021-11-01', 9000000, NULL, 1),
+('freeship12', 'Miễn phí vận chuyển tháng 12', 97, NULL, '2021-12-01', '2022-01-01', 8000000, NULL, 1),
+('sinhnhat2021', 'Sinh nhật lần thứ 2', 99, 15, '2021-10-01', '2022-02-10', 5000000, 100000, 2);
 
 -- --------------------------------------------------------
 
@@ -445,7 +562,22 @@ CREATE TABLE `sale_order` (
 
 INSERT INTO `sale_order` (`orderID`, `saleID`) VALUES
 (172, 'freeship10'),
-(173, 'freeship12');
+(173, 'freeship12'),
+(174, '11112222333'),
+(175, '11112222333'),
+(175, 'freeship12'),
+(175, 'sinhnhat2021'),
+(176, '11112222333');
+
+--
+-- Triggers `sale_order`
+--
+DELIMITER $$
+CREATE TRIGGER `insertsaleorder` BEFORE INSERT ON `sale_order` FOR EACH ROW UPDATE sale
+ SET quantity = quantity - 1
+ WHERE id = NEW.saleID
+$$
+DELIMITER ;
 
 -- --------------------------------------------------------
 
@@ -479,7 +611,15 @@ CREATE TABLE `user` (
 
 INSERT INTO `user` (`username`, `password`, `email`, `date`, `status`, `image`) VALUES
 ('admin', '$2y$10$Stb9lXNXey0ck7YBj4Uhn.0gMLvkmbQilnnI3YLcpfOVcRKgCtenq', 'dzeamtechie@gmail.com', '2021-12-08', 1, NULL),
-('chiquang', '$2y$10$U9wmz2.FjK3LemXkCCUPy.151W52fbOiyinbWrmPmfIcwrRdPXOtu', 'chiquang127@gmail.com', '2021-12-08', 1, NULL);
+('chiquang', '$2y$10$jooGMQahSUlBOiEEFuenB.EGUv862XpEXa5MhiYUkJlFUFNvjdQX2', 'chiquang127@gmail.com', '2021-12-08', 1, NULL);
+
+--
+-- Triggers `user`
+--
+DELIMITER $$
+CREATE TRIGGER `addUser` AFTER INSERT ON `user` FOR EACH ROW INSERT INTO `cart` (`id`, `username`) VALUES (NULL, NEW.username)
+$$
+DELIMITER ;
 
 -- --------------------------------------------------------
 
@@ -497,7 +637,8 @@ CREATE TABLE `userrole` (
 --
 
 INSERT INTO `userrole` (`username`, `rolename`) VALUES
-('admin', 'admin');
+('admin', 'admin'),
+('chiquang', 'staff.product.add');
 
 --
 -- Indexes for dumped tables
@@ -658,13 +799,13 @@ ALTER TABLE `userrole`
 -- AUTO_INCREMENT for table `cart`
 --
 ALTER TABLE `cart`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 
 --
 -- AUTO_INCREMENT for table `category`
 --
 ALTER TABLE `category`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
 
 --
 -- AUTO_INCREMENT for table `customer`
@@ -682,13 +823,13 @@ ALTER TABLE `employee`
 -- AUTO_INCREMENT for table `import`
 --
 ALTER TABLE `import`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=48;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=52;
 
 --
 -- AUTO_INCREMENT for table `ordertb`
 --
 ALTER TABLE `ordertb`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=174;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=177;
 
 --
 -- AUTO_INCREMENT for table `permission`
@@ -700,19 +841,19 @@ ALTER TABLE `permission`
 -- AUTO_INCREMENT for table `product`
 --
 ALTER TABLE `product`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10011;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10017;
 
 --
 -- AUTO_INCREMENT for table `publisher`
 --
 ALTER TABLE `publisher`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
 -- AUTO_INCREMENT for table `rating`
 --
 ALTER TABLE `rating`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=63;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
 
 --
 -- Constraints for dumped tables
