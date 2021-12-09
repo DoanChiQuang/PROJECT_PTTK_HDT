@@ -2,7 +2,7 @@
     <!-- Brand Logo -->
     <a href="index3.html" class="brand-link">
         <i class="fa fa-book" aria-hidden="true"></i>
-        <span class="brand-text font-weight-light">PhoneStore</span>
+        <span class="brand-text font-weight-light">PhoneStore</span> 
     </a>
 
     <!-- Sidebar -->
