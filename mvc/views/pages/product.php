@@ -101,21 +101,7 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div class="owl-carousel owl-theme">
-                                <div class="item">
-                                    <div style="justify-content: center;">
-                                        <h4>Language</h4>
-                                        <i class="fas fa-globe-americas"></i>
-                                        <p>${product.language}</p>
-                                    </div>
-                                </div>
-                                <div class="item">
-                                    <div style="justify-content: center;">
-                                        <h4>Page Number</h4>
-                                        <i class="fas fa-file-alt"></i>
-                                        <p>${product.pagenumber}</p>
-                                    </div>
-                                </div>
+                            <div class="owl-carousel owl-theme" style="text-align: center;">                                
                                 <div class="item">
                                     <div style="justify-content: center;">
                                         <h4>Publish Date</h4>
@@ -127,7 +113,7 @@
                                     <div style="justify-content: center;">
                                         <h4>Rated</h4>
                                         <i class="fas fa-globe-americas"></i>
-                                        <p>${product.esrbID.name}</p>
+                                        <p>5 star</p>
                                     </div>
                                 </div>
                                 <div class="item">
@@ -141,8 +127,7 @@
                                     <div style="justify-content: center;">
                                         <h4>Category</h4>
                                         <i class="fas fa-user-tie"></i>
-                                        <p>Action , Cartoon , Film</p>
-
+                                        <p></p>
                                     </div>
                                 </div>
                             </div>
@@ -263,10 +248,8 @@
             data = await response.json();
             return (data);
         } catch (error) {
-            console.log(error);
-            return;
-        }
-        return
+            console.log(error);            
+        }        
     }
 
     (async () => {

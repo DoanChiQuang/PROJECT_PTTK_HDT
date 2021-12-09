@@ -16,7 +16,7 @@
 
             <!-- Image Logo -->
             <a class="navbar-brand logo-image" href="index.html"><img
-                    src="<?php echo constant('URL') ?>public/assets/images/logo.svg" alt="alternative"></a>
+                    src="<?php echo constant('URL') ?>public/assets/images/logo.jpg" alt="alternative"></a>
 
             <!-- Text Logo - Use this if you don't have a graphic logo -->
             <!-- <a class="navbar-brand logo-text" href="index.html">Ioniq</a> -->

@@ -78,13 +78,13 @@
                                         <div class="middle">
                                             <div class="amount">
                                                 <input type="text" class="inputvalue-min" id="minprice" value="0đ">
-                                                <input type="text" class="inputvalue-max" id="maxprice" value="100000đ">
+                                                <input type="text" class="inputvalue-max" id="maxprice" value="50000000đ">
                                             </div>
                                             <div class="multi-range-slider">
                                                 <input type="range" class="rangechange" id="input-left" min="0"
-                                                    max="100000" value="0">
+                                                    max="50000000" value="0">
                                                 <input type="range" class="rangechange" id="input-right" min="0"
-                                                    max="100000" value="100000">
+                                                    max="50000000" value="50000000">
 
                                                 <div class="slider">
                                                     <div class="track"></div>
@@ -96,48 +96,11 @@
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                            <!--Languages-->
-                            <div class="card">
-                                <div class="card-heading">
-                                    <h4 data-toggle="collapse" data-target="#collapseThree">Languages</h4>
-                                </div>
-                                <div id="collapseThree" class="collapse show" data-parent="#accordionExample">
-                                    <div class="selectbody">
-                                        <select class="form-control" id="selectLanguage" name="">
-                                            <option value="Vietnamese">Vietnamese</option>
-                                            <option value="English">English</option>
-                                        </select>
-                                    </div>
-                                </div>
-
-                            </div>
-                            <!--esrb-->
-                            <div class="card">
-                                <div class="card-heading">
-                                    <h4 data-toggle="collapse" data-target="#collapseFour">ESRB</h4>
-                                </div>
-                                <div id="collapseFour" class="collapse show" data-parent="#accordionExample">
-                                    <!-- <form class="formchange" data-name="esrb">
-                                        <input type="checkbox" name="esrb" value="5">
-                                        <label>under 10</label>
-                                        <input type="checkbox" name="esrb" value="1">
-                                        <label>18+</label>                                                                                
-                                    </form> -->
-                                    <div class="card-body">
-                                        <div class="shop__sidebar__categories">
-                                            <form class="formchange" data-name="esrb">
-                                                <ul class="nice-scroll cardesrb" id="checkboxes">
-                                                </ul>
-                                            </form>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                            </div>                                                        
                             <!--publisher-->
                             <div class="card">
                                 <div class="card-heading">
-                                    <h4 data-toggle="collapse" data-target="#collapseFive">Publisher</h4>
+                                    <h4 data-toggle="collapse" data-target="#collapseFive">Brand</h4>
                                 </div>
                                 <div id="collapseFive" class="collapse show" data-parent="#accordionExample">
                                     <!-- <form class="formchange" data-name="publisher">
@@ -148,36 +111,14 @@
                                     </form> -->
                                     <div class="card-body">
                                         <div class="shop__sidebar__categories">
-                                            <form class="formchange" data-name="publisher">
-                                                <ul class="nice-scroll cardpublisher" id="checkboxes">
+                                            <form class="formchange" data-name="brand">
+                                                <ul class="nice-scroll cardbrand" id="checkboxes">
                                                 </ul>
                                             </form>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                            <!--author-->
-                            <div class="card">
-                                <div class="card-heading">
-                                    <h4 data-toggle="collapse" data-target="#collapseSix">Author</h4>
-                                </div>
-                                <div id="collapseSix" class="collapse show" data-parent="#accordionExample">
-                                    <!-- <form class="formchange" data-name="sale">
-                                        <input type="checkbox" name="sale" value="discount20">
-                                        <label>Sale 20%</label>
-                                        <input type="checkbox" name="sale" value="discount50">
-                                        <label>Sale 50%</label>                                                                                
-                                    </form> -->
-                                    <div class="card-body">
-                                        <div class="shop__sidebar__categories">
-                                            <form class="formchange" data-name="author">
-                                                <ul class="nice-scroll cardauthor" id="checkboxes">
-                                                </ul>
-                                            </form>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                            </div>                            
                             <!--sale-->
                             <div class="card">
                                 <div class="card-heading">
@@ -277,20 +218,16 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script>
     const cardproduct = document.querySelector('.cardproduct');
-    const cardcategory = document.querySelector('.cardcategory');
-    const cardesrb = document.querySelector('.cardesrb');
-    const cardpublisher = document.querySelector('.cardpublisher');
-    const cardsale = document.querySelector('.cardsale');
-    const cardauthor = document.querySelector('.cardauthor');
+    const cardcategory = document.querySelector('.cardcategory');    
+    const cardbrand = document.querySelector('.cardbrand');
+    const cardsale = document.querySelector('.cardsale');    
     const spinner = document.querySelector('.spinner');
 
     let URL_API_PRODUCT = '<?php echo constant('URL')?>product/getAllStatus';
     let URL_API_CATEGORY = '<?php echo constant('URL')?>category/getbuildTree';
-    let URL_API_CATEGORY_PRODUCT = '<?php echo constant('URL')?>category/getCategoryProductAll';
-    let URL_API_ESRB = '<?php echo constant('URL')?>esrb/getall';
-    let URL_API_PUBLISHER = '<?php echo constant('URL')?>publisher/getall';
-    let URL_API_SALE = '<?php echo constant('URL')?>sale/getSaleByType/0';
-    let URL_API_AUTHOR = '<?php echo constant('URL')?>author/getall';
+    let URL_API_CATEGORY_PRODUCT = '<?php echo constant('URL')?>category/getCategoryProductAll';    
+    let URL_API_BRAND = '<?php echo constant('URL')?>publisher/getall';
+    let URL_API_SALE = '<?php echo constant('URL')?>sale/getSaleByType/0';    
     const paramsString = window.location;
     let searchParams = new URLSearchParams(paramsString.search);
     // for (let p of searchParams) {
@@ -351,26 +288,16 @@
         const html = buildCategoryTree(arr);
         //console.log(html);
         cardcategory.innerHTML = html;
-    }
+    }    
 
-    function cardEsrb(arr) {
-        var esrbs = arr.data;
-        const html = esrbs.map(esrb => {
-            return ` 
-                        <li><input type="checkbox" name="esrb" value="${esrb.id}" id="esrb_${esrb.id}" /><label class="whatever" for="esrb_${esrb.id}">${esrb.name}</label></li>                                                    
-                        `;
-        }).join('');
-        cardesrb.innerHTML += html;
-    }
-
-    function cardPublisher(arr) {
+    function cardBrand(arr) {
         var publishers = arr.data;
         const html = publishers.map(publisher => {
             return ` 
                         <li><input type="checkbox" name="publisher" value="${publisher.id}" id="publisher_${publisher.id}" /><label class="whatever" for="publisher_${publisher.id}">${publisher.name}</label></li>                                                    
                         `;
         }).join('');
-        cardpublisher.innerHTML += html;
+        cardbrand.innerHTML += html;
     }
 
     function cardSale(arr) {
@@ -381,17 +308,7 @@
                         `;
         }).join('');
         cardsale.innerHTML += html;
-    }
-
-    function cardAuthor(arr) {
-        var authors = arr.data;
-        const html = authors.map(author => {
-            return ` 
-                        <li><input type="checkbox" name="author" value="${author.id}" id="author_${author.id}" /><label class="whatever" for="author_${author.id}">${author.name}</label></li>                                                    
-                        `;
-        }).join('');
-        cardauthor.innerHTML += html;
-    }
+    }    
 
     function cardProduct(arr) {
         var products = arr.data;
@@ -499,26 +416,11 @@
             var price = '&price=' + searchParams.get('price');
         } else {
             var price = '';
-        }
-        if (searchParams.has('language')) {
-            var language = '&language=' + searchParams.get('language');
+        }                
+        if (searchParams.has('brand')) {
+            var brand = '&brand=' + searchParams.get('brand');
         } else {
-            var language = '';
-        }
-        if (searchParams.has('esrb')) {
-            var esrb = '&esrb=' + searchParams.get('esrb');
-        } else {
-            var esrb = '';
-        }
-        if (searchParams.has('author')) {
-            var author = '&author=' + searchParams.get('author');
-        } else {
-            var author = '';
-        }
-        if (searchParams.has('publisher')) {
-            var publisher = '&publisher=' + searchParams.get('publisher');
-        } else {
-            var publisher = '';
+            var brand = '';
         }
         if (searchParams.has('sale')) {
             var sale = '&sale=' + searchParams.get('sale');
@@ -530,7 +432,7 @@
         } else {
             var search = '';
         }
-        searchURL = sort + category + price + language + esrb + publisher + author + sale + search;
+        searchURL = sort + category + price + brand + sale + search;
         //console.log(searchURL);            
         history.replaceState(paramsString.href, '', paramsString.origin + paramsString.pathname + '?' + searchURL);
         
@@ -552,23 +454,11 @@
             if (searchParams.has('price')) {
                 //console.log(searchParams.get('sort'));                        
                 arrayfilter = await pricefilter(searchParams.get('price'), arrayfilter);
-            }
-            if (searchParams.has('language')) {
+            }                        
+            if (searchParams.has('brand')) {
                 //console.log(searchParams.get('language'));
-                arrayfilter = await languagefilter(searchParams.get('language'), arrayfilter);
-            }
-            if (searchParams.has('esrb')) {
-                //console.log(searchParams.get('language'));
-                arrayfilter = await esrbfilter(searchParams.get('esrb'), arrayfilter);
-            }
-            if (searchParams.has('publisher')) {
-                //console.log(searchParams.get('language'));
-                arrayfilter = await publisherfilter(searchParams.get('publisher'), arrayfilter);
-            }
-            if (searchParams.has('author')) {
-                //console.log(searchParams.get('language'));
-                arrayfilter = await authorfilter(searchParams.get('author'), arrayfilter);
-            }
+                arrayfilter = await brandfilter(searchParams.get('brand'), arrayfilter);
+            }            
             if (searchParams.has('sale')) {
                 //console.log(searchParams.get('language'));
                 arrayfilter = await salefilter(searchParams.get('sale'), arrayfilter);
@@ -684,42 +574,8 @@
                 resolve(filterarr);
             });
         });
-    }
-    async function languagefilter(selected, arrayproducts) {
-        return new Promise(resolve => {
-            setTimeout(function () {
-                var array = [];
-                var i = 0;
-                arrayproducts.data.forEach(element => {
-                    if (element.language === selected) {
-                        array[i++] = element;
-                    }
-                })
-                filterarr.data = array;
-                resolve(filterarr);
-            });
-        });
-    }
-    async function esrbfilter(selected, arrayproducts) {
-        return new Promise(resolve => {
-            setTimeout(function () {
-                var arr = selected.split('_');
-                var array = [];
-                var i = 0;
-                arrayproducts.data.forEach(element => {
-                    arr.forEach(key => {
-                        if (element.esrbID.id === key) {
-                            array[i++] = element;
-                        }
-                    });
-                })
-                //console.log(array);                              
-                filterarr.data = array;
-                resolve(filterarr);
-            });
-        });
-    }
-    async function publisherfilter(selected, arrayproducts) {
+    }        
+    async function brandfilter(selected, arrayproducts) {
         return new Promise(resolve => {
             setTimeout(function () {
                 var arr = selected.split('_');
@@ -737,28 +593,7 @@
                 resolve(filterarr);
             });
         });
-    }
-    async function authorfilter(selected, arrayproducts) {
-        return new Promise(resolve => {
-            setTimeout(function () {
-                var arr = selected.split('_');
-                var array = [];
-                var i = 0;
-                // console.log(arr);
-                arrayproducts.data.forEach(element => {
-                    arr.forEach(key => { 
-                        // console.log(element.authorID.id);
-                        if (element.authorID.id === key) {
-                            array[i++] = element;
-                        }
-                    });
-                })
-                // console.log(array);                              
-                filterarr.data = array;
-                resolve(filterarr);
-            });
-        });
-    }
+    }    
     async function salefilter(selected, arrayproducts) {
         return new Promise(resolve => {
             setTimeout(function () {
@@ -808,19 +643,15 @@
     }
 
     (async () => {
-        const products = await fetchProduct(URL_API_PRODUCT);
-        const esrb = await fetchProduct(URL_API_ESRB);
-        const publisher = await fetchProduct(URL_API_PUBLISHER);
+        const products = await fetchProduct(URL_API_PRODUCT);        
+        const brand = await fetchProduct(URL_API_BRAND);
         const sale = await fetchProduct(URL_API_SALE);
-        const category = await fetchProduct(URL_API_CATEGORY);
-        const author = await fetchProduct(URL_API_AUTHOR);
+        const category = await fetchProduct(URL_API_CATEGORY);        
         const category_product = await fetchProduct(URL_API_CATEGORY_PRODUCT);
         arrayproducts = products;
         arraycategory_product = category_product;
-        cardCategory(category);
-        cardEsrb(esrb);
-        cardPublisher(publisher);
-        cardAuthor(author);
+        cardCategory(category);        
+        cardBrand(brand);        
         cardSale(sale);
         await loadpage(products, pagenum);
         showresults();

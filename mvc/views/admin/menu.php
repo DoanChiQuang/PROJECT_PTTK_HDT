@@ -2,7 +2,7 @@
     <!-- Brand Logo -->
     <a href="index3.html" class="brand-link">
         <i class="fa fa-book" aria-hidden="true"></i>
-        <span class="brand-text font-weight-light">Bookstore</span>
+        <span class="brand-text font-weight-light">PhoneStore</span>
     </a>
 
     <!-- Sidebar -->
@@ -64,17 +64,11 @@
                                 <p>Thể loại</p>
                             </a>
                         </li>
-                       
-                        <li class="nav-item">
-                            <a id="" href="<?php echo constant('URL') ?>Author" class="nav-link">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>Tác giả</p>
-                            </a>
-                        </li>
+                                               
                         <li class="nav-item">
                             <a id="" href="<?php echo constant('URL') ?>publisher" class="nav-link">
                                 <i class="far fa-circle nav-icon"></i>
-                                <p>Nhà xuất bản</p>
+                                <p>Thương hiệu</p>
                             </a>
                         </li>
                         <li class="nav-item">
@@ -82,13 +76,7 @@
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Sale</p>
                             </a>
-                        </li>
-                        <li class="nav-item">
-                            <a id="" href="<?php echo constant('URL') ?>esrb" class="nav-link">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>Esrb</p>
-                            </a>
-                        </li>
+                        </li>                        
                     </ul>
                 </li>
                 <li class="nav-item">

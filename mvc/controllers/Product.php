@@ -107,30 +107,19 @@ class Product extends Controller{
         //$list = $this->product->getID($id);
         
         $product = json_decode($this->product->getID($id));
-        $sale = $product->data[0]->saleID;
-        $author = $product->data[0]->authorID; // id author
-        $publisher = $product->data[0]->publisherID; // id publisher
-        $esrb = $product->data[0]->esrbID;
-        if(isset($author)){
-            $authorobj = json_decode($this->author->getID($author));
-            $product->data[0]->authorID = array("id" => $authorobj->data[0]->id,"name" => $authorobj->data[0]->name);
-        }
+        $sale = $product->data[0]->saleID;        
+        $publisher = $product->data[0]->publisherID; // id publisher        
         if(isset($publisher)){
             $publisherobj = json_decode($this->publisher->getID($publisher));
             $product->data[0]->publisherID = array("id" => $publisherobj->data[0]->id,"name" => $publisherobj->data[0]->name);
-        }
-        if(isset($esrb)){
-            $esrbobj = json_decode($this->esrb->getID($esrb));
-            $product->data[0]->esrbID = array("id" => $esrbobj->data[0]->id ,"name" => $esrbobj->data[0]->name);
-        }
+        }        
         if(isset($sale)){
             $saleobj = json_decode($this->sale->getID($sale));
             $product->data[0]->saleID = array("id" => $saleobj->data[0]->id , "name" => $saleobj->data[0]->name , "discount" => $saleobj->data[0]->discount, "startdate" => $saleobj->data[0]->startdate,"enddate" => $saleobj->data[0]->enddate);
         }
         else if(isset($product->data[0]->id)){
             $product->data[0]->saleID = array("id" => "Null" , "name" => "Null" , "discount" => "0");
-        }
-        json_decode($this->author->getID($author));
+        }        
         $arrCategory = array();
         array_push($arrCategory,"orange");
         array_push($arrCategory,"banana");
@@ -147,24 +136,20 @@ class Product extends Controller{
         if(isset($_POST['txtName']) && $_POST['txtPrice']){
             $name = $_POST['txtName'];
             $description= $_POST['txtDescription'];
-            $price= $_POST['txtPrice'];
-            $pagenumber= $_POST['txtPagenumber'];
+            $price= $_POST['txtPrice'];            
             
             $quantity= 0;
 
             
-            $publishdate = $_POST['txtPublishdate'];
-            $language = $_POST['txtLanguage'];
+            $publishdate = $_POST['txtPublishdate'];            
             $status = 0;
 
             
-            $publisherID= $_POST['selectPublisher'];
-            $authorID= $_POST['selectAuthor'];
-            $saleID= $_POST['selectSale'];
-            $esrbID = $_POST['selectRated'];
+            $publisherID= $_POST['selectPublisher'];            
+            $saleID= $_POST['selectSale'];            
 
             $image= basename($_FILES["txtImage"]["name"]);
-            $array = array('name' => $name, 'description' => $description, 'quantity' => $quantity , 'price' => $price , 'pagenumber' => $pagenumber , 'image' => $image , 'authorID' => $authorID , 'publisherID' => $publisherID, 'publishdate' => $publishdate, 'language' => $language, 'status' => $status, 'esrbID' => $esrbID);
+            $array = array('name' => $name, 'description' => $description, 'quantity' => $quantity , 'price' => $price  , 'image' => $image , 'publisherID' => $publisherID, 'publishdate' => $publishdate, 'status' => $status);
             if(isset($saleID)){
                 $array+=array('saleID' => $saleID);
             }
@@ -256,22 +241,18 @@ class Product extends Controller{
         if(isset($_POST['txtName']) && $_POST['txtPrice']){
             $name = $_POST['txtName'];
             $description= $_POST['txtDescription'];
-            $price= $_POST['txtPrice'];
-            $pagenumber= $_POST['txtPagenumber'];
+            $price= $_POST['txtPrice'];            
             
             
             $image= basename($_FILES["txtImage"]["name"]);
 
-            $publishdate = $_POST['txtPublishdate'];
-            $language = $_POST['txtLanguage'];
+            $publishdate = $_POST['txtPublishdate'];            
             $status = $_POST['txtStatus'];
 
-            $publisherID= $_POST['selectPublisher'];
-            $authorID= $_POST['selectAuthor'];
+            $publisherID= $_POST['selectPublisher'];            
             $saleID= $_POST['selectSale'];
-            $esrbID = $_POST['selectRated'];
 
-            $array = array('name' => $name, 'description' => $description, 'price' => $price , 'pagenumber' => $pagenumber , 'publishdate' => $publishdate, 'language' => $language, 'status' => $status, 'esrbID' => $esrbID);
+            $array = array('name' => $name, 'description' => $description, 'price' => $price , 'publishdate' => $publishdate, 'status' => $status);
             if(!empty($image)){
                 $array += array('image' => $image);
             }
@@ -281,9 +262,7 @@ class Product extends Controller{
             if(!empty($publisherID)){
                 $array+=array('publisherID' => $publisherID);
             }
-            if(!empty($authorID)){
-                $array+=array('authorID' => $authorID);
-            }
+            
             if($this->product->updateByID($array,$id)==1){
                 $target_dir = "./public/assets/images/";
                 $target_file = $target_dir.basename($_FILES["txtImage"]["name"]);

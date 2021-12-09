@@ -46,15 +46,11 @@
                                         <th>Name</th>
                                         <th>Quantity</th>
                                         <th>Price</th>
-                                        <th>Status</th>
-                                        <th>PageNumber</th>
-                                        <th>Publish Date</th>
-                                        <th>Language</th>
-                                        <th>Esrb</th>
+                                        <th>Status</th>                                        
+                                        <th>Publish Date</th>                                        
                                         <th>Image</th>
-                                        <th>Category</th>
-                                        <th>Author</th>
-                                        <th>Publisher</th>
+                                        <th>Category</th>                                        
+                                        <th>Brand</th>
                                         <th>SaleID</th>
                                         <th>Description</th>
                                         <th>#</th>
@@ -70,15 +66,11 @@
                                         <th>Name</th>
                                         <th>Quantity</th>
                                         <th>Price</th>
-                                        <th>Status</th>
-                                        <th>PageNumber</th>
+                                        <th>Status</th>                                        
                                         <th>Publish Date</th>
-                                        <th>Language</th>
-                                        <th>Esrb</th>
                                         <th>Image</th>
-                                        <th>Category</th>
-                                        <th>Author</th>
-                                        <th>Publisher</th>
+                                        <th>Category</th>                                        
+                                        <th>Brand</th>
                                         <th>SaleID</th>
                                         <th>Description</th>
                                         <th>#</th>
@@ -121,23 +113,11 @@
                                 <label for="exampleInputEmail1">Product Price</label>
                                 <input name="txtPrice" type="number" class="form-control "
                                     placeholder="Enter " required>
-                            </div>
-                            <div class="form-group">
-                                <label for="exampleInputEmail1">Product Page Number</label>
-                                <input name="txtPagenumber" type="number" class="form-control "
-                                    placeholder="Enter ">
-                            </div>
-                            <div class="row">
+                            </div>                            
+                            <div class="row">                                
                                 <div class="col">
                                     <div class="form-group">
-                                    <label for="exampleInputEmail1">Author</label>
-                                    <select name="selectAuthor" class="form-control select2" id="selectAuthor" style="width: 100%;">
-                                    </select>
-                                    </div>
-                                </div>
-                                <div class="col">
-                                    <div class="form-group">
-                                    <label for="exampleInputEmail1">Publisher</label>
+                                    <label for="exampleInputEmail1">Brand</label>
                                     <select name="selectPublisher" class="form-control select2" id="selectPublisher" style="width: 100%;">
                                     </select>
                                     </div>
@@ -148,17 +128,7 @@
                                         <select name="selectSale" class="form-control select2" id="selectSale" style="width: 100%;">
                                         </select>
                                     </div>
-                                </div>
-                                <div class="col">
-                                    <div class="form-group">
-                                        <label for="exampleInputEmail1">Rated Age</label>
-                                        <select name="selectRated" class="form-control select2" id="selectRated" style="width: 100%;">
-                                        </select>
-                                    </div>
-                                </div>
-                                
-                            </div>
-                            <div class="row">
+                                </div>                                
                                 <div class="col">
                                     <div class="form-group">
                                     <label for="exampleInputEmail1">Product Publish Date</label>
@@ -166,15 +136,7 @@
                                         placeholder="Enter " required>
                                     </div>
                                 </div>
-                                <div class="col">
-                                    <div class="form-group">
-                                    <label for="exampleInputEmail1">Product Language</label>
-                                    <input name="txtLanguage" type="text" class="form-control "
-                                        placeholder="Enter " required>
-                                    </div>
-                                </div>
-                                
-                            </div>
+                            </div>                            
                             <div class="form-group w-25">
                                 <label for="exampleInputEmail1">Product Image</label>
                                 <input name="txtImage" id="txtImage" type="file" accept="image/*" class="form-control "
@@ -278,20 +240,8 @@
                                 <label for="exampleInputEmail1">Product Price</label>
                                 <input name="txtPrice" type="number" class="form-control "
                                     placeholder="Enter " required>
-                            </div>
-                            <div class="form-group">
-                                <label for="exampleInputEmail1">Product Page Number</label>
-                                <input name="txtPagenumber" type="number" class="form-control "
-                                    placeholder="Enter ">
-                            </div>
-                            <div class="row">
-                                <div class="col">
-                                    <div class="form-group">
-                                    <label for="exampleInputEmail1">Author</label>
-                                    <select name="selectAuthor" class="form-control select2" id="selectAuthorUpdate" style="width: 100%;">
-                                    </select>
-                                    </div>
-                                </div>
+                            </div>                            
+                            <div class="row">                                
                                 <div class="col">
                                     <div class="form-group">
                                         <label for="exampleInputEmail1">Product Publisher</label>
@@ -308,29 +258,12 @@
                                 </div>
                                 <div class="col">
                                     <div class="form-group">
-                                        <label for="exampleInputEmail1">Product Rated Age</label>
-                                        <select name="selectRated" class="form-control select2" id="selectRatedUpdate" style="width: 100%;">
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col">
-                                    <div class="form-group">
                                     <label for="exampleInputEmail1">Product Publish Date</label>
                                     <input name="txtPublishdate" type="date" class="form-control "
                                         placeholder="Enter " required>
                                     </div>
-                                </div>
-                                <div class="col">
-                                    <div class="form-group">
-                                    <label for="exampleInputEmail1">Product Language</label>
-                                    <input name="txtLanguage" type="text" class="form-control "
-                                        placeholder="Enter " required>
-                                    </div>
-                                </div>
-                                
-                            </div>
+                                </div>                                
+                            </div>                            
                             <div class="form-group w-25">
                                 <label for="exampleInputEmail1">Product Image</label>
                                 <input name="txtImage" id="txtImageUpdate" type="file" accept="image/*" class="form-control "
@@ -588,24 +521,10 @@
                         }
                         
                     }
-                },
-                {
-                    "data": "pagenumber"
-                },
+                },                
                 {
                     "data": "publishdate"
-                },
-                {
-                    "data": "language"
-                },
-                {
-                    "data": "esrbID",
-                    "render": function (data, type, row, meta) {
-                        return( 
-                            data.name
-                        );
-                    }
-                },
+                },                
                 
                 {
                     "data": "image",
@@ -636,15 +555,7 @@
 
                         );
                     }
-                },
-                {
-                    "data": "authorID",
-                    "render": function (data, type, row, meta) {
-                        return( 
-                            data.name
-                        );
-                    }
-                },
+                },                
                 {
                     "data": "publisherID",
                     "render": function (data, type, row, meta) {

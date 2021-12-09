@@ -3,7 +3,7 @@
         <div class="row">
             <div class="col-lg-6">
                 <div class="text-container">
-                    <h1 class="h1-large">50% Discount Book<span class="replace-me">small, young,
+                    <h1 class="h1-large">50% Discount Phone<span class="replace-me">small, young,
                             boots</span></h1>
                     <p class="p-large"></p>
                     <a class="btn-solid-lg" href="sign-up.html">Buy now</a>
@@ -64,13 +64,13 @@
     </div>
 </div>
 
-<div class="moviewpb-section">
+<!-- <div class="moviewpb-section">
     <div class="container-fluid">
         <h1>Author</h1>
     </div>
     <div class="owl-carousel owl-theme cardauthor" id="">
     </div>
-</div>
+</div> -->
 
 <!-- Modal -->
 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -203,7 +203,7 @@
                                                 <h1 class="title"><a href="<?php echo constant('URL') ?>detail/product/${product.id}">${product.name}</a></h1>
                                             </span> 
                                             <span class="genre">
-                                                ${product.authorID.name}
+                                                
                                             </span> 
                                         </div>
                                                        
@@ -292,7 +292,7 @@
                                                 <h1 class="title"><a href="<?php echo constant('URL') ?>detail/product/${product.id}">${product.name}</a></h1>
                                             </span> 
                                             <span class="genre">
-                                                ${product.authorID.name}
+                                                
                                             </span> 
                                         </div>
                                                        
@@ -381,8 +381,7 @@
                                                 <span class="headertitle">
                                                     <h1 class="title"><a href="<?php echo constant('URL') ?>detail/product/${product.id}">${product.name}</a></h1>
                                                 </span> 
-                                                <span class="genre">
-                                                    ${product.authorID.name}
+                                                <span class="genre">                                                    
                                                 </span> 
                                             </div>
                                                         
@@ -403,11 +402,7 @@
         }).join('');
         cardsale.innerHTML += html;
 
-    }
-
-    function categoryparent(arr) {    
-        
-    }    
+    }        
     function cardCategory(arr) {        
         var categorys = arr.data;        
         const html = categorys.map(category => {
@@ -485,21 +480,21 @@
             console.log(error);
         }
         // return data.data;
-        return data.items || data.results;
+        //return data.items || data.results;
     }
     
     (async () => {
         const products = await fetchProduct(URL_API_PRODUCT);
         const categories = await fetchProduct(URL_API_CATEGORY);
         const categoriestree = await fetchProduct(URL_API_CATEGORYTREE);        
-        const authors = await fetchProduct(URL_API_AUTHOR);        
+        //const authors = await fetchProduct(URL_API_AUTHOR);        
         arrayproducts = products;
         arraycategory = categoriestree;        
         cardBestSeller(products);
         cardSale(products);
         cardNewRelease(products);
         cardCategory(categories);
-        cardAuthor(authors);
+        //cardAuthor(authors);
         slider();
         spinner.setAttribute("hidden","");
         
@@ -591,7 +586,7 @@
                                                         <div class="col-lg-9">
                                                             <div class="row">
                                                                 <h2>${element.name}</h2>
-                                                                <p>${element.authorID.name} (Author)</p>
+                                                                <p> (Brand)</p>
                                                                 <div>
                                                                     `+ pricehtml +`|
                                                                     <span>Quantity:</span><span> ${element.quantity}</span>
@@ -606,19 +601,13 @@
 
                                                             <table class="table table-borderless">
                                                                 <thead>
-                                                                    <tr>
-                                                                        <th>Page Number</th>
-                                                                        <th>Publish Date</th>
-                                                                        <th>Language</th>
+                                                                    <tr>                                                                        
                                                                         <th>Rated</th>
-                                                                        <th>Publisher</th>
+                                                                        <th>Brand</th>
                                                                     </tr>
                                                                 </thead>
                                                                 <tbody>
-                                                                    <tr>
-                                                                        <td>${element.pagenumber}</td>
-                                                                        <td>${element.publishdate}</td>
-                                                                        <td>${element.language}</td>
+                                                                    <tr>                                                                        
                                                                         <td>5 Star</td>
                                                                         <td>${element.publisherID.name}</td>
                                                                     </tr>
