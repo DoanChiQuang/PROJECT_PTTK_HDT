@@ -118,9 +118,9 @@
                                 </div>
                                 <div class="item">
                                     <div style="justify-content: center;">
-                                        <h4>Publisher</h4>
+                                        <h4>Supplier</h4>
                                         <i class="fas fa-user-tie"></i>
-                                        <p>${product.publisherID.name}</p>
+                                        <p>${product.supplierID.name}</p>
                                     </div>
                                 </div>
                                 <div class="item">
@@ -209,7 +209,7 @@
                     }
                     return `
                         <div class="card-comment">
-                            <img class="img-circle img-sm" src="<?php echo constant('URL')?>public/assets/images/${rating.image}" alt="User Image" style="height:40px; width:40px!important;-webkit-border-radius: 100%;-moz-border-radius: 100%;object-fit: cover;overflow: hidden>
+                            <img class="img-circle img-sm" src="<?php echo constant('URL')?>public/assets/dist/img/${rating.image}" alt="User Image" style="height:40px; width:40px!important;-webkit-border-radius: 100%;-moz-border-radius: 100%;object-fit: cover;overflow: hidden>
                                 <div class="comment-text">
                                     <span class="username">
                                         ${rating.name}

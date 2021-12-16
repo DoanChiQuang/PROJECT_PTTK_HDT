@@ -50,7 +50,7 @@
                                         <th>Publish Date</th>                                        
                                         <th>Image</th>
                                         <th>Category</th>                                        
-                                        <th>Brand</th>
+                                        <th>Supplier</th>
                                         <th>SaleID</th>
                                         <th>Description</th>
                                         <th>#</th>
@@ -70,7 +70,7 @@
                                         <th>Publish Date</th>
                                         <th>Image</th>
                                         <th>Category</th>                                        
-                                        <th>Brand</th>
+                                        <th>Supplier</th>
                                         <th>SaleID</th>
                                         <th>Description</th>
                                         <th>#</th>
@@ -557,7 +557,7 @@
                     }
                 },                
                 {
-                    "data": "publisherID",
+                    "data": "supplierID",
                     "render": function (data, type, row, meta) {
                         return(
                             data.name
@@ -668,25 +668,26 @@
             url: '<?php echo constant('URL') ?>product/getByID/'+id,
             dataType: 'json',
             success: function(data){
+                //console.log(data);
                 x.elements[0].value = data['data'][0].name;
                 x.elements[1].value = data['data'][0].price;
-                x.elements[2].value = data['data'][0].pagenumber;
-                x.elements[7].value = data['data'][0].publishdate;
-                x.elements[8].value = data['data'][0].language;
+                //x.elements[2].value = data['data'][0].pagenumber;
+                // x.elements[7].value = data['data'][0].publishdate;
+                // x.elements[8].value = data['data'][0].language;
                 
                 $("#summernote2").summernote("code", data['data'][0].description);
                 
                 $("#imageProduct").attr("src","<?php echo constant('URL') ?>public/assets/images/"+data['data'][0].image)
                 $('#txtImageUpdate').val('');
               
-                $("#selectPublisherUpdate").select2().select2("val", data['data'][0].publisherID.id);
+                $("#selectPublisherUpdate").select2().select2("val", data['data'][0].supplierID.id);
                 
-                $("#selectAuthorUpdate").select2().select2("val", data['data'][0].authorID.id);
+                //$("#selectAuthorUpdate").select2().select2("val", data['data'][0].authorID.id);
                 
                 $("#selectSaleUpdate").select2().select2("val", data['data'][0].saleID.id);
              
 
-                $("#selectRatedUpdate").select2().select2("val", data['data'][0].esrbID.id);
+               //$("#selectRatedUpdate").select2().select2("val", data['data'][0].esrbID.id);
             }
         });
         $formUpdate = document.querySelector("#formUpdate");

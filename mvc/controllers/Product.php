@@ -28,7 +28,7 @@ class Product extends Controller{
         for($i=0 ; $i< count($product->data) ; $i++ ){            
          
                 $author = $product->data[$i]->authorID; // id author
-                $publisher = $product->data[$i]->publisherID; // id publisher
+                $supplier = $product->data[$i]->supplierID; // id publisher
                 $sale = $product->data[$i]->saleID;
                 $esrb = $product->data[$i]->esrbID;
                 
@@ -39,12 +39,12 @@ class Product extends Controller{
                 else{
                     $product->data[$i]->authorID = array("id" => "Null" , "name" => "Null");
                 }
-                if(isset($publisher)){
-                    $publisherobj = json_decode($this->publisher->getID($publisher));
-                    $product->data[$i]->publisherID = array("id"=>$publisherobj->data[0]->id, "name" => $publisherobj->data[0]->name);
+                if(isset($supplier)){
+                    $supplierobj = json_decode($this->publisher->getID($supplier));
+                    $product->data[$i]->supplierID = array("id"=>$supplierobj->data[0]->id, "name" => $supplierobj->data[0]->name);
                 }
                 else{
-                    $product->data[$i]->publisherID = array("id" => "Null" , "name" => "Null");
+                    $product->data[$i]->supplierID = array("id" => "Null" , "name" => "Null");
                 }
                 if(isset($esrb)){
                     $esrbobj = json_decode($this->esrb->getID($esrb));
@@ -73,7 +73,7 @@ class Product extends Controller{
         for($i=0 ; $i< count($product->data) ; $i++ ){            
          
                 $author = $product->data[$i]->authorID; // id author
-                $publisher = $product->data[$i]->publisherID; // id publisher
+                $supplier = $product->data[$i]->supplierID; // id publisher
                 $sale = $product->data[$i]->saleID;
                 $esrb = $product->data[$i]->esrbID;
                 
@@ -81,9 +81,9 @@ class Product extends Controller{
                     $authorobj = json_decode($this->author->getID($author));
                     $product->data[$i]->authorID = array("id" => $authorobj->data[0]->id,"name" => $authorobj->data[0]->name);
                 }
-                if(isset($publisher)){
-                    $publisherobj = json_decode($this->publisher->getID($publisher));
-                    $product->data[$i]->publisherID = array("id"=>$publisherobj->data[0]->id, "name" => $publisherobj->data[0]->name);
+                if(isset($supplier)){
+                    $supplierobj = json_decode($this->publisher->getID($supplier));
+                    $product->data[$i]->supplierID = array("id"=>$supplierobj->data[0]->id, "name" => $supplierobj->data[0]->name);
                 }
                 if(isset($esrb)){
                     $esrbobj = json_decode($this->esrb->getID($esrb));
@@ -108,10 +108,10 @@ class Product extends Controller{
         
         $product = json_decode($this->product->getID($id));
         $sale = $product->data[0]->saleID;        
-        $publisher = $product->data[0]->publisherID; // id publisher        
-        if(isset($publisher)){
-            $publisherobj = json_decode($this->publisher->getID($publisher));
-            $product->data[0]->publisherID = array("id" => $publisherobj->data[0]->id,"name" => $publisherobj->data[0]->name);
+        $supplier = $product->data[0]->supplierID; // id publisher        
+        if(isset($supplier)){
+            $supplierobj = json_decode($this->publisher->getID($supplier));
+            $product->data[0]->supplierID = array("id" => $supplierobj->data[0]->id,"name" => $supplierobj->data[0]->name);
         }        
         if(isset($sale)){
             $saleobj = json_decode($this->sale->getID($sale));
@@ -149,7 +149,7 @@ class Product extends Controller{
             $saleID= $_POST['selectSale'];            
 
             $image= basename($_FILES["txtImage"]["name"]);
-            $array = array('name' => $name, 'description' => $description, 'quantity' => $quantity , 'price' => $price  , 'image' => $image , 'publisherID' => $publisherID, 'publishdate' => $publishdate, 'status' => $status);
+            $array = array('name' => $name, 'description' => $description, 'quantity' => $quantity , 'price' => $price  , 'image' => $image , 'supplierID' => $publisherID, 'publishdate' => $publishdate, 'status' => $status);
             if(isset($saleID)){
                 $array+=array('saleID' => $saleID);
             }
@@ -260,7 +260,7 @@ class Product extends Controller{
                 $array+=array('saleID' => $saleID);
             }
             if(!empty($publisherID)){
-                $array+=array('publisherID' => $publisherID);
+                $array+=array('supplierID' => $publisherID);
             }
             
             if($this->product->updateByID($array,$id)==1){

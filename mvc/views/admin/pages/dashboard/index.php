@@ -25,7 +25,7 @@
             <div class="col">
                 <div class="card card-info">
                     <div class="card-header">
-                        <h3 class="card-title">Doanh thu Chart</h3>                        
+                        <h3 class="card-title">Revenue Chart</h3>                        
                         <div class="card-tools">
                             <button type="button" class="btn btn-tool" data-card-widget="collapse">
                                 <i class="fas fa-minus"></i>
@@ -61,8 +61,7 @@
             <div class="col">
                 <div class="card card-danger">
                     <div class="card-header">
-                        <h3 class="card-title">Pie Chart</h3>
-
+                        <h3 class="card-title">Top Selling Chart</h3>                        
                         <div class="card-tools">
                             <button type="button" class="btn btn-tool" data-card-widget="collapse">
                                 <i class="fas fa-minus"></i>
@@ -73,13 +72,29 @@
                         </div>
                     </div>
                     <div class="card-body">
+                        <div>
+                            <!-- <label for="">Show by:</label>
+                            <select id="selectpiechart">                                                              
+                                <option value="id" selected>Product</option>
+                                <option value="authorID">Author</option>                                                              
+                                <option value="publisherID">Publisher</option>
+                            </select> -->
+                            <span style="margin-left: 10px;"></span>
+                            <label for="">Number of:</label>
+                            <select id="selectnumshow">                                                              
+                                <option value="5" selected>5</option>
+                                <option value="10">10</option>                                                              
+                                <option value="15">15</option>
+                            </select>                                
+                        </div>
+                        <hr>
                         <canvas id="pieChart"
                             style="min-height: 500px; height: 500px; max-height: 500px; max-width: 100%;"></canvas>
                     </div>
                     <!-- /.card-body -->
                 </div>
             </div>
-            <div class="col">
+            <div class="col" style="display: none">
                 <div class="card card-success">
                     <div class="card-header">
                         <h3 class="card-title">Bar Chart</h3>
@@ -98,8 +113,7 @@
                             <canvas id="barChart"
                                 style="min-height: 500px; height: 500px; max-height: 500px; max-width: 100%;"></canvas>
                         </div>
-                    </div>
-                    <!-- /.card-body -->
+                    </div>                    
                 </div>
             </div>
 
@@ -204,24 +218,24 @@
         //-------------
         // Get context with jQuery - using jQuery's .get() method.
         //var donutChartCanvas = $('#donutChart').get(0).getContext('2d')
-        var donutData = {
-            labels: [
-                'Chrome',
-                'IE',
-                'FireFox',
-                'Safari',
-                'Opera',
-                'Navigator',
-            ],
-            datasets: [{
-                data: [700, 500, 400, 600, 300, 100],
-                backgroundColor: ['#f56954', '#00a65a', '#f39c12', '#00c0ef', '#3c8dbc', '#d2d6de'],
-            }]
-        }
-        var donutOptions = {
-            maintainAspectRatio: false,
-            responsive: true,
-        }
+        // var donutData = {
+        //     labels: [
+        //         'Chrome',
+        //         'IE',
+        //         'FireFox',
+        //         'Safari',
+        //         'Opera',
+        //         'Navigator',
+        //     ],
+        //     datasets: [{
+        //         data: [700, 500, 400, 600, 300, 100],
+        //         backgroundColor: ['#f56954', '#00a65a', '#f39c12', '#00c0ef', '#3c8dbc', '#d2d6de'],
+        //     }]
+        // }
+        // var donutOptions = {
+        //     maintainAspectRatio: false,
+        //     responsive: true,
+        // }
         //Create pie or douhnut chart
         // You can switch between pie and douhnut using the method below.
         // new Chart(donutChartCanvas, {
@@ -234,20 +248,22 @@
         //- PIE CHART -
         //-------------
         // Get context with jQuery - using jQuery's .get() method.
-        var pieChartCanvas = $('#pieChart').get(0).getContext('2d')
-        var pieData = donutData;
-        var pieOptions = {
-            maintainAspectRatio: false,
-            responsive: true,
-        }
+        // var pieChartCanvas = $('#pieChart').get(0).getContext('2d')
+        // var pieData = donutData;
+        // var pieOptions = {
+        //     maintainAspectRatio: false,
+        //     responsive: true,
+        // }
         //Create pie or douhnut chart
         // You can switch between pie and douhnut using the method below.
-        new Chart(pieChartCanvas, {
-            type: 'pie',
-            data: pieData,
-            options: pieOptions
-        })
-
+        // var pieChart = function() {
+        //     new Chart(pieChartCanvas, {
+        //         type: 'pie',
+        //         data: pieData,
+        //         options: pieOptions
+        //     })
+        // }
+        //pieChart();
         //-------------
         //- BAR CHART -
         //-------------
@@ -415,7 +431,7 @@
         function random_rgba() {
             var o = Math.round, r = Math.random, s = 255;
             return 'rgba(' + o(r()*s) + ',' + o(r()*s) + ',' + o(r()*s) + ',0.9)';
-        }        
+        }                
         ShowLineChartBy('year');        
         $(document).on('change', '#selectby', function (e){
             var value = $(e.target).val();                        
@@ -427,20 +443,71 @@
             {
                 ShowLineChartBy(value); 
             }   
-        });                      
+        });
+        $(document).on('change', '#selectpiechart', function (e) {
+            var value = $(e.target).val();
+            var num = $('#selectnumshow').val();
+            console.log(num);
+            if(value == 'id')            
+            {        
+                var arr = getTop(num,sort,value);
+                ShowPieChart(arr,num);
+            }            
+            else
+            {
+                var arr = getTop2(num,sort,value);
+                ShowPieChart(arr,num);
+            }
+        });
+        $(document).on('change', '#selectnumshow', function (e) {
+            var num = $(e.target).val();            
+            //var value = $('#selectpiechart').val();
+            var value = 'id';
+            if(value == 'id')
+            {        
+                var arr = getTop(num,sort,value);
+                ShowPieChart(arr,num);
+            }            
+            else
+            {
+                var arr = getTop2(num,sort,value);
+                ShowPieChart(arr,num);
+            }
+        });
+         
     })
-    async function fetchProduct(urlEndpoint) {
-        let data;
-        try {
-            const response = await fetch(urlEndpoint);
-            data = await response.json();
-            return (data);
-        } catch (error) {
-            console.log(error);
+    function ShowPieChart(arr,top) {            
+        var arrdata = [],arrlabels = [],i=0;            
+        arr.forEach(element => {
+            //console.log(element);
+            arrdata[i] = element.sold;
+            arrlabels[i] = element.name;
+            i++;
+        });            
+        donutData = {
+            labels: arrlabels,
+            datasets: [{
+                data: arrdata,
+                backgroundColor: ['#f56954', '#00a65a', '#f39c12', '#00c0ef', '#3c8dbc', '#d2d6de', '#D2691E', '#00008B', '#008B8B','#006400',
+                                '#FF1493','#228B22','#F0E68C','#ADD8E6','#FAFAD2'],
+            }]
         }
-        // return data.data;
-        return data.items || data.results;
-    }
+        var donutOptions = {
+            maintainAspectRatio: false,
+            responsive: true,
+        }
+        var pieChartCanvas = $('#pieChart').get(0).getContext('2d')
+        var pieData = donutData;
+        var pieOptions = {
+            maintainAspectRatio: false,
+            responsive: true,
+        }
+        new Chart(pieChartCanvas, {
+            type: 'pie',
+            data: pieData,
+            options: pieOptions
+        })
+    }    
     function checkDuplicate(id,columm){
         for(let i=0;i<topArr.length;i++){
             if(topArr[i][columm]==id){
@@ -473,11 +540,11 @@
             //nếu thỏa điều kiện thì push và tăng count 
             topArr.push(sort[i]);
             count+=1;
-            console.log(count)
+            //console.log(count)
             if(count==top){ //nếu đủ thì dừng vòng lặp
                 break; 
             }
-        }
+        }        
         return topArr;
     }
     function getTop2(top,sort,columm){
@@ -496,17 +563,32 @@
             //nếu thỏa điều kiện thì push và tăng count 
             topArr.push(sort[i]);
             count+=1;
-            console.log(count)
+            //console.log(count)
             if(count==top){ //nếu đủ thì dừng vòng lặp
                 break; 
             }
         }
         return topArr;
+    }    
+    async function fetchProduct(urlEndpoint) {
+        let data;
+        try {
+            const response = await fetch(urlEndpoint);
+            data = await response.json();
+            return (data);
+        } catch (error) {
+            console.log(error);
+        }
+        // return data.data;
+        //return data.items || data.results;
     }
+       
+    let URL_API_PRODUCT = '<?php echo constant('URL')?>product/getAllStatus';
     (async () => {
         const products = await fetchProduct(URL_API_PRODUCT);
         sort = await sortSold(products);
-
+        var arr = getTop(5,sort,"id");
+        ShowPieChart(arr,5);
     })();
     async function sortSold(arrayproducts) {
         return new Promise(resolve => {
@@ -518,5 +600,5 @@
                 resolve(products);
             });
         });
-    }
+    }    
 </script>

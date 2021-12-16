@@ -4,7 +4,7 @@
             function __construct() 
             {
                   // Khai báo tên bảng
-                  $this->_table_name = 'publisher';
+                  $this->_table_name = 'supplier';
                   
                   // Khai báo tên field id
                   $this->_key = 'id';

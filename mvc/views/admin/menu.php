@@ -68,7 +68,7 @@
                         <li class="nav-item">
                             <a id="" href="<?php echo constant('URL') ?>publisher" class="nav-link">
                                 <i class="far fa-circle nav-icon"></i>
-                                <p>Thương hiệu</p>
+                                <p>Nhà cung cấp</p>
                             </a>
                         </li>
                         <li class="nav-item">

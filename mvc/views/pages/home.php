@@ -56,7 +56,7 @@
     </div>
 </div> -->
 
-<div class="moviewpb-section">
+<div class="moviewpb-section" style="display: none">
     <div class="container-fluid">
         <h1>Category</h1>
     </div>
@@ -493,7 +493,7 @@
         cardBestSeller(products);
         cardSale(products);
         cardNewRelease(products);
-        cardCategory(categories);
+        //cardCategory(categories);
         //cardAuthor(authors);
         slider();
         spinner.setAttribute("hidden","");
@@ -603,13 +603,13 @@
                                                                 <thead>
                                                                     <tr>                                                                        
                                                                         <th>Rated</th>
-                                                                        <th>Brand</th>
+                                                                        <th>Supplier</th>
                                                                     </tr>
                                                                 </thead>
                                                                 <tbody>
                                                                     <tr>                                                                        
                                                                         <td>5 Star</td>
-                                                                        <td>${element.publisherID.name}</td>
+                                                                        <td>${element.supplierID.name}</td>
                                                                     </tr>
                                                                 </tbody>
                                                             </table>

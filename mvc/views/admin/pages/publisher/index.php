@@ -10,7 +10,7 @@
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a href="#">Home</a></li>
                         <li class="breadcrumb-item active">Quản lý sản phẩm</li>
-                        <li class="breadcrumb-item active">Thương hiệu</li>
+                        <li class="breadcrumb-item active">Nhà cung cấp</li>
                     </ol>
                 </div>
             </div>
@@ -26,7 +26,7 @@
 
                     <div class="card">
                         <div class="card-header">
-                            <h3 class="card-title">Brand table</h3>
+                            <h3 class="card-title">Supplier table</h3>
 
                             <button type="button" onclick="openModal('')" href="#"
                                 class="btn btn-primary btn-sm float-right" role="button" data-toggle="modal"
@@ -85,12 +85,12 @@
 
                         <div class="card-body">
                             <div class="form-group">
-                                <label for="exampleInputEmail1">Publisher Name</label>
+                                <label for="exampleInputEmail1">Supplier Name</label>
                                 <input name="txtName" type="text" class="form-control "
                                     placeholder="Enter ">
                             </div>
                             <div class="form-group">
-                                <label for="exampleInputEmail1">Publisher Detail</label>
+                                <label for="exampleInputEmail1">Supplier Detail</label>
                                 <input name='txtDetail' type="text" class="form-control "
                                     placeholder="Enter ">
                             </div>
@@ -147,12 +147,12 @@
 
                         <div class="card-body">
                             <div class="form-group">
-                                <label for="exampleInputEmail1">Publisher Name</label>
+                                <label for="exampleInputEmail1">Supplier Name</label>
                                 <input name="txtName" type="text" class="form-control" id=""
                                     placeholder="Enter ">
                             </div>
                             <div class="form-group">
-                                <label for="exampleInputEmail1">Publisher Detail</label>
+                                <label for="exampleInputEmail1">Supplier Detail</label>
                                 <input name='txtDetail' type="text" class="form-control" id=""
                                     placeholder="Enter ">
                             </div>

@@ -98,7 +98,7 @@
                                 </div>
                             </div>                                                        
                             <!--publisher-->
-                            <div class="card">
+                            <div class="card" style="display: none">
                                 <div class="card-heading">
                                     <h4 data-toggle="collapse" data-target="#collapseFive">Brand</h4>
                                 </div>

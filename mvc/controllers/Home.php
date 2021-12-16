@@ -113,10 +113,10 @@ class Home extends Controller{
                     }
                     $_SESSION['username'] = $txtusername;
                     $_SESSION['password'] = $txtpassword;
-                    if(isset($_POST['checkremember']))
-                    {
+                    // if(isset($_POST['checkremember']))
+                    // {
                         setcookie("username", $txtusername, time() + (86400 * 7), "/");                                                            
-                    }
+                    //}
                     echo 1;
                     return;
                 }                
